@@ -1,25 +1,34 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-function Movie({ id, coverImg, title, summary, genres }) {
-  return <div>
-  <img src={coverImg} alt={title} />
-  <h2>
-    <Link to={`/movie/${id}`}>{title}</Link>
-  </h2>
-  <p>{summary}</p>
-  <ul>
-    {genres.map((g) => (
-      <li key={g}>{g}</li>
-    ))}
-  </ul>
-</div>;
+import "./Movie.css";
+function Movie({ id, year, poster, title, summary, genres }) {
+  return (
+  <div className="movie">
+    <Link to={`/movie/${id}`}>
+    <img src={poster} alt={title} title={title} />
+    <div className="movie__data">
+      <h3 className="movie__title">{title}</h3>
+      <h5 className="movie__year">{year}</h5>
+      <ul className="movie__genres">
+        {genres.map((genre, index) => (
+          <li key={index} className="genres__genre">
+            {genre}
+          </li>
+        ))}
+      </ul>
+      <p className="movie__summary">{summary.length > 250 ? `${summary.slice(0,180)}...` : summary} </p>
+    </div>
+  </Link>
+</div>
+);
 }
 
 Movie.propTypes = {
   id: PropTypes.number.isRequired,
-  coverImg: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
